@@ -114,6 +114,7 @@ with aba[1]:
 
 with aba[2]:
     st.subheader("🛒 Vendas")
+    st.markdown("<small>Indicadores com meta 0 ao final do dia</small>", unsafe_allow_html=True)
 
     # Painel com filtros
     #col1, col2, col3, col4 = st.columns(4)
