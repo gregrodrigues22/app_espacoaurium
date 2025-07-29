@@ -179,7 +179,7 @@ with aba[2]:
         meta_2 = df_filtrado[df_filtrado['etapa'] == "Contato Inicial"]
         st.metric("Cartões na Etapa Contato Inicial", len(meta_2))
         with st.expander("🔍 Ver linhas da Etapa Contato Inicial"):
-            st.dataframe(meta_1[['title','createDate']])
+            st.dataframe(meta_2[['title','createDate']])
     
     with col3:
         etapas_meta_3 = ["Breakup", "Agendado", "Reativação de Venda Perdida","Finalização para Pós Venda"]
