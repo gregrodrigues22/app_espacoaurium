@@ -129,6 +129,26 @@ with aba[2]:
 
     with col4:
         ganho = st.multiselect("Razão de ganho", options=sorted(df['gain_reason'].dropna().unique()))
+    
+    df_filtrado = df.copy()
+    
+    # Filtro por Etapa
+    if etapa != "Todos":
+        df_filtrado = df_filtrado[df_filtrado['etapa'] == etapa]
+
+    # Filtro por Status
+    if status:
+        df_filtrado = df_filtrado[df_filtrado['status'].isin(status)]
+
+    # Filtro por Razão de Perda
+    if perda:
+        df_filtrado = df_filtrado[df_filtrado['loss_reason'].isin(perda)]
+
+    # Filtro por Razão de Ganho
+    if ganho:
+        df_filtrado = df_filtrado[df_filtrado['gain_reason'].isin(ganho)]
+
+    st.dataframe(df_filtrado)
 
 # ────────────────────────────────────────────────────────────────────────────────
 #  ABA 0  –  Análise por Vendas
