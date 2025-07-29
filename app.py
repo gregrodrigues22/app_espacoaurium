@@ -115,19 +115,20 @@ with aba[1]:
 with aba[2]:
     st.subheader("🛒 Vendas")
 
-    # Painel lateral com filtros
-    col1, col2 = st.columns(2)
+    # Painel com filtros
+    col1, col2, col3, col4 = st.columns(4)
 
     with col1:
-        etapas = st.selectbox("Etapas", options=["Todos"] + sorted(df['etapa'].dropna().unique().tolist()))
-        status = st.multiselect("Status", options=sorted(df['status'].dropna().unique()))
-        loss_reason = st.multiselect("Razão de perda", options=sorted(df['loss_reason'].dropna().unique()))
-        gain_reason = st.multiselect("Razão de ganho", options=sorted(df['gain_reason'].dropna().unique()))
+        etapa = st.selectbox("Etapas", options=["Todos"] + sorted(df['etapa'].dropna().unique().tolist()))
 
     with col2:
-        st.subheader("🛒 Vendas")
-        #fields_Campanha = st.date_input("Data inicial", value=df['data_venda'].min())
-        #data_fim = st.date_input("Data final", value=df['data_venda'].max())
+        status = st.multiselect("Status", options=sorted(df['status'].dropna().unique()))
+
+    with col3:
+        perda = st.multiselect("Razão de perda", options=sorted(df['loss_reason'].dropna().unique()))
+
+    with col4:
+        ganho = st.multiselect("Razão de ganho", options=sorted(df['gain_reason'].dropna().unique()))
 
 # ────────────────────────────────────────────────────────────────────────────────
 #  ABA 0  –  Análise por Vendas
