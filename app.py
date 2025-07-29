@@ -172,15 +172,21 @@ with aba[2]:
     with col1:
         meta_1 = df_filtrado[df_filtrado['etapa'] == "Novo Lead"]
         st.metric("Cartões na Etapa Novo Lead", len(meta_1))
+    with st.expander("🔍 Ver linhas da Etapa Novo Lead"):
+        st.dataframe(meta_1[['title','createDate']])
     
     with col2:
         meta_2 = df_filtrado[df_filtrado['etapa'] == "Contato Inicial"]
         st.metric("Cartões na Etapa Contato Inicial", len(meta_2))
+    with st.expander("🔍 Ver linhas da Etapa Contato Inicial"):
+        st.dataframe(meta_1[['title','createDate']])
     
     with col3:
         etapas_meta_3 = ["Breakup", "Agendado", "Reativação de Venda Perdida","Finalização para Pós Venda"]
         meta_3 = df_filtrado[(df_filtrado['etapa'].isin(etapas_meta_3)) & (df_filtrado['status'] == "open")]
         st.metric("Status Aberto nas Etapas 'Agendado', 'Reativação Perdida' e 'Finalização Pós Venda'", len(meta_3))
+        with st.expander("🔍 Ver linhas do Status Aberto nas Etapas Alvo"):
+            st.dataframe(meta_3[['title','createDate']])
 
     col4, col5, col6 = st.columns(3)
     
@@ -188,14 +194,20 @@ with aba[2]:
         etapas_finais = ["Agendado", "Finalização para Pós Venda", "Avanço para Proposta Procedimento"]
         meta_4 = df_filtrado[(df_filtrado['status'] == "gain") & (~df_filtrado['etapa'].isin(etapas_finais))]
         st.metric("Ganho fora das Etapas 'Agendado', 'Finalização Pós Venda' e 'Avanço Procedimento'", len(meta_4))
+        with st.expander("🔍 Ver linhas de Ganho fora das Etapas Finais"):
+            st.dataframe(meta_4[['title','createDate']])
 
     with col5:
         meta_5 = df_filtrado[(df_filtrado['status'] == "lost") & (~df_filtrado['etapa'].isin(["Breakup", "Reativação de Venda Perdida"]))]
         st.metric("Perdido fora das Etapas 'Breakup' e 'Reativação Perdida'", len(meta_5))
+        with st.expander("🔍 Ver linhas de Perdido fora das Etapas de Perda Esperada"):
+            st.dataframe(meta_5[['title','createDate']])
 
     with col6:
         meta_6 = df_filtrado[(df_filtrado['etapa'] == "Agendado") & ( (df_filtrado['value'] == '0.00') | (df_filtrado['fields_Produto'].isna()) )]
         st.metric("Agendado com Informação Incompleta", len(meta_6))
+        with st.expander("🔍 Ver linhas de Agendado com Informação Incompleta"):
+            st.dataframe(meta_6[['title','createDate']]
 
 # ────────────────────────────────────────────────────────────────────────────────
 #  ABA 0  –  Análise por Vendas
