@@ -1,6 +1,45 @@
-import streamlit as st
+# ---------------------------------------------------------------
+# Set up
+# ---------------------------------------------------------------
+import streamlit as st  
+import plotly.graph_objects as go
+import numpy as np
+from google.cloud import bigquery
 import pandas as pd
+import json
+from scipy.stats import linregress
+from plotly.subplots import make_subplots
+from plotly.colors import sequential
 import os
+
+# ---------------------------------------------------------------
+# Big Query
+# ---------------------------------------------------------------
+PROJECT_ID = "escolap2p" 
+TABLE_ID = "escolap2p.cliente_espacoaurium.crm" 
+
+with open("/tmp/keyfile.json", "w") as f:
+    json.dump(st.secrets["bigquery"].to_dict(), f)
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/tmp/keyfile.json"
+
+client = bigquery.Client()
+
+# ---------------------------------------------------------------
+# Aquisição de dados do Big Query
+# ---------------------------------------------------------------
+@st.cache_data
+def consultar_dados():
+    client = bigquery.Client()
+    query = """
+        SELECT
+            *
+        FROM
+            `escolap2p.cliente_espacoaurium.crm`
+    """
+    return client.query(query).to_dataframe()
+
+# Executa a query e transforma em DataFrame
+df = consultar_dados()
 
 # ---------------------------------------------------------------
 # Configuração da página
@@ -39,7 +78,6 @@ st.markdown("""
 # ---------------------------------------------------------------
 # Carregando dos dados
 # ---------------------------------------------------------------
-df = carregar_dados()
 
 st.header("🎲 Tipos de Análise")
 
@@ -47,6 +85,7 @@ st.header("🎲 Tipos de Análise")
 aba = st.tabs([
     "🧑 Clientes",
     "🤝 Parceiros",
+    "🛒 Vendas",
     "📊 Satisfação",
     "💰 Financeiro"
 ])
@@ -65,9 +104,12 @@ with aba[1]:
     st.info("Conteúdo de Análise de Parceiros — (em construção)")
 
 with aba[2]:
-    st.info("Conteúdo de Análise de Satisfação — (em construção)")
+    st.info("Conteúdo de Análise de Parceiros — (em construção)")
 
 with aba[3]:
+    st.info("Conteúdo de Análise de Satisfação — (em construção)")
+
+with aba[4]:
     st.info("Conteúdo de Análise Financeira — (em construção)")
 
     
