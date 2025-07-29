@@ -153,27 +153,27 @@ with aba[2]:
 
     with col1:
         meta_1 = df[df['etapa'] == "Novo Lead"]
-        st.metric("Cartões na Etapa Novo Lead [Meta 0 ao final do dia]", len(meta_1))
+        st.metric("Cartões na Etapa Novo Lead", len(meta_1))
     
     with col2:
         meta_2 = df[df['etapa'] == "Contato inicial"]
-        st.metric("Cartões na Etapa Contato inicial [Meta 0 ao final do dia]", len(meta_2))
+        st.metric("Cartões na Etapa Contato inicial", len(meta_2))
     
     with col3:
         etapas_meta_3 = ["Breakup", "Agendado", "Reativação de Venda Perdida","Finalização para Pós Venda"]
         meta_3 = df[(df['etapa'].isin(etapas_meta_3)) & (df['status'] == "open")]
-        st.metric("Status Aberto nas Etapas Agendado, Reativação de Venda Perdida e Finalização para Pós Venda [Meta 0 ao final do dia]", len(meta_3))
+        st.metric("Status Aberto nas Etapas Agendado, Reativação de Venda Perdida e Finalização para Pós Venda", len(meta_3))
 
     col4, col5, col6 = st.columns(3)
     
     with col4:
         etapas_finais = ["Agendado", "Finalização para Pós Venda", "Avanço para Proposta Procedimento"]
         meta_4 = df[(df['status'] == "gain") & (~df['etapa'].isin(etapas_finais))]
-        st.metric("Ganho fora das Etapas Agendado, Finalização para Pós Venda e Avanço para Proposta Procedimento [Meta 0 ao final do dia]", len(meta_4))
+        st.metric("Ganho fora das Etapas Agendado, Finalização para Pós Venda e Avanço para Proposta Procedimento", len(meta_4))
 
     with col5:
         meta_5 = df[(df['status'] == "lost") & (~df['etapa'].isin(["Breakup", "Reativação de Venda Perdida"]))]
-        st.metric("Perdido fora das Etapas Breakup e Reativação de Venda Perdida [Meta 0 ao final do dia]", len(meta_5))
+        st.metric("Perdido fora das Etapas Breakup e Reativação de Venda Perdida", len(meta_5))
 
     with col6:
         meta_6 = df[(df['etapa'] == "Agendado") & ( (df['value'] == '0.00') | (df['fields_Fonte do Lead'].isna()) | (df['fields.Produto'].isna()) )]
