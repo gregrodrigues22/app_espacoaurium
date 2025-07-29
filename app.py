@@ -176,7 +176,7 @@ with aba[2]:
         st.metric("Perdido fora das Etapas 'Breakup' e 'Reativação Perdida'", len(meta_5))
 
     with col6:
-        meta_6 = df[(df['etapa'] == "Agendado") & ( (df['value'] == '0.00') | (df['fields.Produto'].isna()) )]
+        meta_6 = df[(df['etapa'] == "Agendado") & ( (df['value'] == '0.00') | (df['fields_Produto'].isna()) )]
         st.metric("Agendado com Informação Incompleta", len(meta_6))
 
 # ────────────────────────────────────────────────────────────────────────────────
