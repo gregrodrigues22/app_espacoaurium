@@ -158,6 +158,16 @@ with aba[2]:
     meta_3 = df[(df['etapa'].isin(etapas_meta_3)) & (df['status'] == "open")]
     st.metric("Status Aberto em etapas críticas", len(meta_3))
 
+    etapas_finais = ["Agendado", "Finalização para Pós Venda", "Avanço para Proposta Procedimento"]
+    meta_4 = df[(df['status'] == "gain") & (~df['etapa'].isin(etapas_finais))]
+    st.metric("Ganho fora das etapas finais", len(meta_4))
+
+    meta_5 = df[(df['status'] == "lost") & (~df['etapa'].isin(["Breakup", "Reativação de Venda Perdida"]))]
+    st.metric("Perdido fora das etapas esperadas", len(meta_5))
+
+    meta_6 = df[(df['etapa'] == "Agendado") & ( df['value'] == '0.00' | df['fields_Fonte do Lead'].isna() | df['fields.Produto'].isna())]
+    st.metric("Agendado com info incompleta", len(meta_6))
+
 # ────────────────────────────────────────────────────────────────────────────────
 #  ABA 0  –  Análise por Vendas
 # ────────────────────────────────────────────────────────────────────────────────
