@@ -115,6 +115,16 @@ with aba[1]:
 with aba[2]:
     st.subheader("🛒 Vendas")
     st.markdown("<small>Indicadores com meta 0 ao final do dia</small>", unsafe_allow_html=True)
+    df['createDate'] = pd.to_datetime(df['createDate'])
+    min_date = df['createDate'].min().date()
+    max_date = df['createDate'].max().date()
+
+    data_inicio, data_fim = st.date_input(
+    "Filtrar por intervalo de data (criação)",
+    value=(min_date, max_date),
+    min_value=min_date,
+    max_value=max_date
+)
 
     # Painel com filtros
     #col1, col2, col3, col4 = st.columns(4)
@@ -157,8 +167,8 @@ with aba[2]:
         st.metric("Cartões na Etapa Novo Lead", len(meta_1))
     
     with col2:
-        meta_2 = df[df['etapa'] == "Contato inicial"]
-        st.metric("Cartões na Etapa Contato inicial", len(meta_2))
+        meta_2 = df[df['etapa'] == "Contato Inicial"]
+        st.metric("Cartões na Etapa Contato Inicial", len(meta_2))
     
     with col3:
         etapas_meta_3 = ["Breakup", "Agendado", "Reativação de Venda Perdida","Finalização para Pós Venda"]
