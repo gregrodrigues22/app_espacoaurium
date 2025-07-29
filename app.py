@@ -116,14 +116,17 @@ with aba[2]:
     st.subheader("🛒 Vendas")
     st.markdown("<small>Indicadores com meta 0 ao final do dia</small>", unsafe_allow_html=True)
     df['createDate'] = pd.to_datetime(df['createDate'])
-    min_date = df['createDate'].min().date()
-    max_date = df['createDate'].max().date()
+    # Obter datas mínima e máxima da base
+    data_minima = df['createDate'].min().date()
+    data_maxima = df['createDate'].max().date()
 
-    data_inicio, data_fim = st.date_input(
-    "Filtrar por intervalo de data (criação)",
-    value=(min_date, max_date),
-    min_value=min_date,
-    max_value=max_date)
+    # Criar seletor de intervalo de datas
+    intervalo_datas = st.date_input(
+        "📅 Filtrar por intervalo de criação",
+        value=(data_minima, data_maxima),
+        min_value=data_minima,
+        max_value=data_maxima
+    )
 
     # Aplicar o filtro se o intervalo for selecionado corretamente
     if isinstance(intervalo_datas, tuple) and len(intervalo_datas) == 2:
