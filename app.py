@@ -148,7 +148,15 @@ with aba[2]:
     if ganho:
         df_filtrado = df_filtrado[df_filtrado['gain_reason'].isin(ganho)]
 
-    st.dataframe(df_filtrado)
+    meta_1 = df[df['etapa'] == "Novo Lead"]
+    st.metric("Novo Lead", len(meta_1))
+
+    meta_2 = df[df['etapa'] == "Contato inicial"]
+    st.metric("Contato inicial", len(meta_2))
+
+    etapas_meta_3 = ["Breakup", "Agendado", "Reativação de Venda Perdida","Finalização para Pós Venda"]
+    meta_3 = df[(df['etapa'].isin(etapas_meta_3)) & (df['status'] == "open")]
+    st.metric("Status Aberto em etapas críticas", len(meta_3))
 
 # ────────────────────────────────────────────────────────────────────────────────
 #  ABA 0  –  Análise por Vendas
