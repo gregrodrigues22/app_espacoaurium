@@ -125,9 +125,10 @@ with aba[2]:
     min_value=min_date,
     max_value=max_date)
 
-    df_filtrado = df[
-    (df['createDate'].dt.date >= data_inicio) &
-    (df['createDate'].dt.date <= data_fim)]
+    # Aplicar o filtro se o intervalo for selecionado corretamente
+    if isinstance(intervalo_datas, tuple) and len(intervalo_datas) == 2:
+        data_inicio, data_fim = intervalo_datas
+        df_filtrado = df[(df['createDate'].dt.date >= data_inicio) & (df['createDate'].dt.date <= data_fim)]
 
     # Painel com filtros
     #col1, col2, col3, col4 = st.columns(4)
