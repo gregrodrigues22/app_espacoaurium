@@ -207,7 +207,7 @@ with aba[2]:
         meta_6 = df_filtrado[(df_filtrado['etapa'] == "Agendado") & ( (df_filtrado['value'] == '0.00') | (df_filtrado['fields_Produto'].isna()) )]
         st.metric("Agendado com Informação Incompleta", len(meta_6))
         with st.expander("🔍 Ver linhas de Agendado com Informação Incompleta"):
-            st.dataframe(meta_6[['title','createDate']]
+            st.dataframe(meta_6[['title','createDate']])
 
 # ────────────────────────────────────────────────────────────────────────────────
 #  ABA 0  –  Análise por Vendas
