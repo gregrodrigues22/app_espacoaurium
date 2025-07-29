@@ -123,8 +123,11 @@ with aba[2]:
     "Filtrar por intervalo de data (criação)",
     value=(min_date, max_date),
     min_value=min_date,
-    max_value=max_date
-)
+    max_value=max_date)
+
+    df_filtrado = df[
+    (df['createDate'].dt.date >= data_inicio) &
+    (df['createDate'].dt.date <= data_fim)]
 
     # Painel com filtros
     #col1, col2, col3, col4 = st.columns(4)
@@ -163,31 +166,31 @@ with aba[2]:
     col1, col2, col3 = st.columns(3)
 
     with col1:
-        meta_1 = df[df['etapa'] == "Novo Lead"]
+        meta_1 = df_filtrado[df_filtrado['etapa'] == "Novo Lead"]
         st.metric("Cartões na Etapa Novo Lead", len(meta_1))
     
     with col2:
-        meta_2 = df[df['etapa'] == "Contato Inicial"]
+        meta_2 = df_filtrado[df_filtrado['etapa'] == "Contato Inicial"]
         st.metric("Cartões na Etapa Contato Inicial", len(meta_2))
     
     with col3:
         etapas_meta_3 = ["Breakup", "Agendado", "Reativação de Venda Perdida","Finalização para Pós Venda"]
-        meta_3 = df[(df['etapa'].isin(etapas_meta_3)) & (df['status'] == "open")]
+        meta_3 = df_filtrado[(df_filtrado['etapa'].isin(etapas_meta_3)) & (df_filtrado['status'] == "open")]
         st.metric("Status Aberto nas Etapas 'Agendado', 'Reativação Perdida' e 'Finalização Pós Venda'", len(meta_3))
 
     col4, col5, col6 = st.columns(3)
     
     with col4:
         etapas_finais = ["Agendado", "Finalização para Pós Venda", "Avanço para Proposta Procedimento"]
-        meta_4 = df[(df['status'] == "gain") & (~df['etapa'].isin(etapas_finais))]
+        meta_4 = df_filtrado[(df_filtrado['status'] == "gain") & (~df_filtrado['etapa'].isin(etapas_finais))]
         st.metric("Ganho fora das Etapas 'Agendado', 'Finalização Pós Venda' e 'Avanço Procedimento'", len(meta_4))
 
     with col5:
-        meta_5 = df[(df['status'] == "lost") & (~df['etapa'].isin(["Breakup", "Reativação de Venda Perdida"]))]
+        meta_5 = df_filtrado[(df_filtrado['status'] == "lost") & (~df_filtrado['etapa'].isin(["Breakup", "Reativação de Venda Perdida"]))]
         st.metric("Perdido fora das Etapas 'Breakup' e 'Reativação Perdida'", len(meta_5))
 
     with col6:
-        meta_6 = df[(df['etapa'] == "Agendado") & ( (df['value'] == '0.00') | (df['fields_Produto'].isna()) )]
+        meta_6 = df_filtrado[(df_filtrado['etapa'] == "Agendado") & ( (df_filtrado['value'] == '0.00') | (df_filtrado['fields_Produto'].isna()) )]
         st.metric("Agendado com Informação Incompleta", len(meta_6))
 
 # ────────────────────────────────────────────────────────────────────────────────
