@@ -100,16 +100,40 @@ with aba[0]:
     st.subheader("🧑 Clientes")
     st.info("Conteúdo de Análise de Clientes — (em construção)")
 
+# ────────────────────────────────────────────────────────────────────────────────
+#  ABA 1  –  Análise por Parceiros
+# ────────────────────────────────────────────────────────────────────────────────
+
 with aba[1]:
+    st.subheader("🤝 Parceiros")
     st.info("Conteúdo de Análise de Parceiros — (em construção)")
+
+# ────────────────────────────────────────────────────────────────────────────────
+#  ABA 0  –  Análise por Vendas
+# ────────────────────────────────────────────────────────────────────────────────
 
 with aba[2]:
-    st.info("Conteúdo de Análise de Parceiros — (em construção)")
+    st.subheader("🛒 Vendas")
+
+    # Painel lateral com filtros
+    col1, col2 = st.columns(2)
+
+    with col1:
+        etapas = st.selectbox("Etapas", options=["Todos"] + sorted(df['etapa'].dropna().unique().tolist()))
+        status = st.multiselect("Status", options=sorted(df['status'].dropna().unique()))
+        loss_reason = st.multiselect("Razão de perda", options=sorted(df['loss_reason'].dropna().unique()))
+        gain_reason = st.multiselect("Razão de ganho", options=sorted(df['gain_reason'].dropna().unique()))
+
+    with col2:
+        #fields_Campanha = st.date_input("Data inicial", value=df['data_venda'].min())
+        #data_fim = st.date_input("Data final", value=df['data_venda'].max())
 
 with aba[3]:
+    st.subheader("📊 Satisfação")
     st.info("Conteúdo de Análise de Satisfação — (em construção)")
 
 with aba[4]:
+    st.subheader("💰 Financeiro")
     st.info("Conteúdo de Análise Financeira — (em construção)")
 
     
