@@ -11,6 +11,7 @@ from scipy.stats import linregress
 from plotly.subplots import make_subplots
 from plotly.colors import sequential
 import os
+from datetime import datetime
 
 # ---------------------------------------------------------------
 # Big Query
@@ -27,7 +28,7 @@ client = bigquery.Client()
 # ---------------------------------------------------------------
 # Aquisição de dados do Big Query
 # ---------------------------------------------------------------
-@st.cache_data
+@st.cache_data(ttl=3600)
 def consultar_dados():
     client = bigquery.Client()
     query = """
@@ -36,10 +37,17 @@ def consultar_dados():
         FROM
             `escolap2p.cliente_espacoaurium.crm`
     """
+    df = client.query(query).to_dataframe()
+    ultima_atualizacao = datetime.now()
     return client.query(query).to_dataframe()
 
+# Botão para limpar o cache manualmente
+if st.sidebar.button("🔄 Atualizar dados agora"):
+    st.cache_data.clear()
+    st.experimental_rerun()
+
 # Executa a query e transforma em DataFrame
-df = consultar_dados()
+df, ultima_atualizacao = consultar_dados()
 
 # ---------------------------------------------------------------
 # Configuração da página
@@ -114,7 +122,8 @@ with aba[1]:
 
 with aba[2]:
     st.subheader("🛒 Vendas")
-    st.markdown("<small>Indicadores com meta 0 ao final do dia</small>", unsafe_allow_html=True)
+    st.caption(f"📅 Dados atualizados em: {ultima_atualizacao.strftime('%d/%m/%Y %H:%M:%S')}")
+    st.caption("📌 Indicadores de inconsistência operacional — meta: **0 registros ao final do dia**.")
     df['createDate'] = pd.to_datetime(df['createDate'])
     # Obter datas mínima e máxima da base
     data_minima = df['createDate'].min().date()
@@ -221,4 +230,3 @@ with aba[4]:
     st.subheader("💰 Financeiro")
     st.info("Conteúdo de Análise Financeira — (em construção)")
 
-    
