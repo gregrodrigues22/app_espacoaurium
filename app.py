@@ -39,7 +39,7 @@ def consultar_dados():
     """
     df = client.query(query).to_dataframe()
     ultima_atualizacao = datetime.now()
-    return client.query(query).to_dataframe()
+    return df, ultima_atualizacao
 
 # Botão para limpar o cache manualmente
 if st.sidebar.button("🔄 Atualizar dados agora"):
