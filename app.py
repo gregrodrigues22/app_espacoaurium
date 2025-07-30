@@ -44,7 +44,7 @@ def consultar_dados():
 # Botão para limpar o cache manualmente
 if st.sidebar.button("🔄 Atualizar dados agora"):
     st.cache_data.clear()
-    st.experimental_rerun()
+    st.rerun()
 
 # Executa a query e transforma em DataFrame
 df, ultima_atualizacao = consultar_dados()
