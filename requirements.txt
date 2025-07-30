@@ -10,3 +10,4 @@ pyarrow
 scipy
 streamlit
 db-dtypes
+pytz

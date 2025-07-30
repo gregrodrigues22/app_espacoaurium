@@ -12,6 +12,7 @@ from plotly.subplots import make_subplots
 from plotly.colors import sequential
 import os
 from datetime import datetime
+import pytz
 
 # ---------------------------------------------------------------
 # Big Query
@@ -38,7 +39,8 @@ def consultar_dados():
             `escolap2p.cliente_espacoaurium.crm`
     """
     df = client.query(query).to_dataframe()
-    ultima_atualizacao = datetime.now()
+    fuso_sp = pytz.timezone("America/Sao_Paulo")
+    ultima_atualizacao = datetime.now(fuso_sp)
     return df, ultima_atualizacao
 
 # ---------------------------------------------------------------
