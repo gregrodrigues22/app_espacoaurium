@@ -179,6 +179,7 @@ with aba[2]:
     #    df_filtrado = df_filtrado[df_filtrado['gain_reason'].isin(ganho)]
 
     # Exibir métricas em linha (dividido em duas linhas de 3 colunas)
+    df_filtrado = df.copy()
     col1, col2, col3 = st.columns(3)
 
     with col1:
