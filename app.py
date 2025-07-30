@@ -41,19 +41,6 @@ def consultar_dados():
     ultima_atualizacao = datetime.now()
     return df, ultima_atualizacao
 
-# Botão para limpar o cache manualmente
-if st.sidebar.button("🔄 Atualizar dados agora"):
-    st.cache_data.clear()
-    st.rerun()
-
-# Executa a query e transforma em DataFrame
-df, ultima_atualizacao = consultar_dados()
-
-# ---------------------------------------------------------------
-# Configuração da página
-# ---------------------------------------------------------------
-st.set_page_config(layout="wide", page_title="📊 Painel Espaço Aurium")
-
 # ---------------------------------------------------------------
 # Side bar
 # ---------------------------------------------------------------
@@ -72,6 +59,19 @@ with st.sidebar:
             <hr style='border: none; border-top: 1px solid #ccc;' />
         </div>
     """, unsafe_allow_html=True)
+
+    # Botão para limpar o cache manualmente
+    if st.sidebar.button("🔄 Atualizar dados agora"):
+        st.cache_data.clear()
+        st.rerun()
+
+# Executa a query e transforma em DataFrame
+df, ultima_atualizacao = consultar_dados()
+
+# ---------------------------------------------------------------
+# Configuração da página
+# ---------------------------------------------------------------
+st.set_page_config(layout="wide", page_title="📊 Painel Espaço Aurium")
 
 # ---------------------------------------------------------------
 # Cabecalho
