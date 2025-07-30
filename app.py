@@ -127,22 +127,23 @@ with aba[2]:
     st.caption(f"📅 Dados atualizados em: {ultima_atualizacao.strftime('%d/%m/%Y %H:%M:%S')}")
     st.caption("📌 Indicadores de inconsistência operacional — meta: **0 registros ao final do dia**.")
     df['createDate'] = pd.to_datetime(df['createDate'])
+    
     # Obter datas mínima e máxima da base
-    data_minima = df['createDate'].min().date()
-    data_maxima = df['createDate'].max().date()
+    #data_minima = df['createDate'].min().date()
+    #data_maxima = df['createDate'].max().date()
 
     # Criar seletor de intervalo de datas
-    intervalo_datas = st.date_input(
-        "📅 Filtrar por intervalo de criação",
-        value=(data_minima, data_maxima),
-        min_value=data_minima,
-        max_value=data_maxima
-    )
+    #intervalo_datas = st.date_input(
+    #    "📅 Filtrar por intervalo de criação",
+    #    value=(data_minima, data_maxima),
+    #    min_value=data_minima,
+    #    max_value=data_maxima
+    #)
 
     # Aplicar o filtro se o intervalo for selecionado corretamente
-    if isinstance(intervalo_datas, tuple) and len(intervalo_datas) == 2:
-        data_inicio, data_fim = intervalo_datas
-        df_filtrado = df[(df['createDate'].dt.date >= data_inicio) & (df['createDate'].dt.date <= data_fim)]
+    #if isinstance(intervalo_datas, tuple) and len(intervalo_datas) == 2:
+    #    data_inicio, data_fim = intervalo_datas
+    #    df_filtrado = df[(df['createDate'].dt.date >= data_inicio) & (df['createDate'].dt.date <= data_fim)]
 
     # Painel com filtros
     #col1, col2, col3, col4 = st.columns(4)
